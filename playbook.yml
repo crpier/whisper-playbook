@@ -1,0 +1,13 @@
+---
+- hosts: all
+  gather_facts: true
+  tasks:
+      - name: Install python dependecies
+        pip:
+            requirements: requirements.txt
+            chdir: .
+            executable: pip3
+      - name: additional dependency
+        pip:
+            name: uvicorn
+            executable: pip3
