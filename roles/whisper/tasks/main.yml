@@ -1,0 +1,10 @@
+---
+tasks:
+    - name: clone the repo
+      pass
+    - name: install dependencies
+      pass
+    - name: deploy config
+      # including service file
+      pass
+
