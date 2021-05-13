@@ -1,28 +1,30 @@
 ---
-tasks:
-    - name: create user
-      user:
-          name: whisper
-          shell: /bin/bash
-          createhome: yes
-          home: /home/whisper
-    - name: clone the repo
-      git:
-          dest: $HOME/whisper
-          repo: https://github.com/tiannaru/whisper
-      become: yes
-      become_user: whisper
-    - name: install debian dependencies
-      apt:
-          name: python-shout==0.2.7
-    - name: install pip dependencies
-      pip:
-          requirements: $HOME/whisper/req.txt
-          virtualenv: $HOME/whisper/venv
-          executable: pip3.7
-      become: yes
-      become_user: whisper
-    - name: deploy config
-      # including service file
-      pass
+- name: create user
+  user:
+      name: whisper
+      shell: /bin/bash
+      createhome: yes
+      home: /home/whisper
+- name: clone the repo
+  git:
+      dest: $HOME/whisper
+      repo: { whisper_github }
+  become: yes
+  become_user: whisper
+- name: install debian dependencies
+  apt:
+      # TODO this should be read from a file
+      name: python-shout==0.2.7
+- name: install pip dependencies
+  pip:
+      requirements: $HOME/whisper/req.txt
+      virtualenv: $HOME/whisper/venv
+      executable: pip3.7
+  become: yes
+  become_user: whisper
+- name: deploy config
+  file: 
+        copy:
+            src: ../files/whisper.service
+            dest: /etc/systemd/system/whisper.service
 

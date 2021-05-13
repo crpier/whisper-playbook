@@ -1,13 +1,12 @@
 ---
 - hosts: all
+  become: true
+  become_user: root
   gather_facts: true
-  tasks:
-      - name: Install python dependecies
-        pip:
-            requirements: requirements.txt
-            chdir: .
-            executable: pip3
-      - name: additional dependency
-        pip:
-            name: uvicorn
-            executable: pip3
+  # TODO read roles from inventory or smth
+  roles:
+      - whisper
+  vars:
+      - whisper_github: https://github.com/tiannaru/whisper
+
+
